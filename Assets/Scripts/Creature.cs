@@ -12,7 +12,28 @@ public class Creature : MonoBehaviour
     [SerializeField]
     protected float actionReset = 3.0f;
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private GameObject egg;
+
+    private void Update()
+    {
+        if(egg != null)
+        {
+            if (egg.GetComponent<Collider2D>().IsTouching(GetComponentInChildren<Collider2D>()))
+            {
+                if (canDoAction)
+                {
+                    canDoAction = false;
+                    StartCoroutine(nameof(DelayAction), egg.GetComponent<Collider2D>());
+                }
+            }
+        }
+        else
+        {
+            egg = FindObjectOfType<Egg>().gameObject;
+        }
+    }
+
+    public void EggCollision(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Egg>() != null)
         {
@@ -22,6 +43,11 @@ public class Creature : MonoBehaviour
                 StartCoroutine(nameof(DelayAction), collision);
             }
         }
+    }
+
+    private void OnMouseDown()
+    {
+        GameManager.Instance.CreatureSelected(gameObject);
     }
 
     public virtual void CreatureAction(GameObject recipient) 

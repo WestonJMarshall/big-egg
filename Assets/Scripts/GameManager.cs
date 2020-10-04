@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class GameManager : MonoBehaviour
 
     private Vector3 eggSpawnLocation = Vector3.zero;
     private Quaternion eggSpawnRotation = Quaternion.identity;
+
+    private GameObject selectedCreature;
+    private GameObject selectedCreatureDetection;
 
     private void Awake()
     {
@@ -25,6 +29,19 @@ public class GameManager : MonoBehaviour
         StartLevel();
     }
 
+    private void Update()
+    {
+        if(Input.GetMouseButtonUp(0) && selectedCreature != null)
+        {
+            CreatureUnSelected();
+        }
+        else if(selectedCreature != null)
+        {
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            selectedCreature.transform.position = new Vector3(worldPos.x, worldPos.y, -30);
+        }
+    }
+
     private void StartScene(Scene scene, LoadSceneMode mode)
     {
         StartLevel();
@@ -33,6 +50,50 @@ public class GameManager : MonoBehaviour
     public void StartLevel()
     {
         StartCoroutine(nameof(FindEggStart));
+    }
+
+    public void CreatureSelected(GameObject creature)
+    {
+        selectedCreature = creature;
+        selectedCreature.transform.SetParent(null, true);
+        selectedCreatureDetection = selectedCreature.GetComponentsInChildren<Collider2D>()[1].gameObject;
+        selectedCreatureDetection.SetActive(false);
+        selectedCreature.GetComponent<Collider2D>().isTrigger = true;
+        selectedCreature.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        selectedCreature.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    private void CreatureUnSelected()
+    {
+        //Find where the creature has been placed
+        if(CheckValidPlacement())
+        {
+            selectedCreature.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        }
+        else //Put back on the creature select UI
+        {
+            selectedCreature.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            selectedCreature.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+            selectedCreature.transform.SetParent(GameObject.FindGameObjectWithTag("CreatureSelectUI").transform);
+        }
+        selectedCreature.GetComponent<Collider2D>().isTrigger = false;
+
+        selectedCreatureDetection.SetActive(true);
+        selectedCreature = null;
+    }
+
+    private bool CheckValidPlacement()
+    {
+        selectedCreature.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        Collider2D[] colliders = FindObjectsOfType<Collider2D>();
+        foreach(Collider2D c2d in colliders)
+        {
+            if (selectedCreature.GetComponent<Rigidbody2D>().IsTouching(c2d))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void ResetLevel()
