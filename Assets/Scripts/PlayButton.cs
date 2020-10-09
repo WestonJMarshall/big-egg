@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayButton : MonoBehaviour
 {
+    public AudioClip menuSound;
     private void Start()
     {
         GetComponent<Button>().onClick.AddListener(SetTimeScale);
@@ -13,6 +14,7 @@ public class PlayButton : MonoBehaviour
 
     private void SetTimeScale()
     {
+        GameManager.Instance.audioManager.GetComponent<AudioSource>().PlayOneShot(menuSound, 0.5f);
         Time.timeScale = 1;
         GameObject.FindGameObjectWithTag("PauseText").GetComponent<TMP_Text>().text = "";
         GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 1, 1, 1);

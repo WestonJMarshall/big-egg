@@ -723,6 +723,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20a4f03278f9054e8a128c92b8247c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuSound: {fileID: 8300000, guid: 1e85cf3a10c75254cbd0339dcbeb6c88, type: 3}
+  audioManager: {fileID: 0}
+  audioManagerPrefab: {fileID: 8888489151169818005, guid: 81d1a20b1c432c44faee07d0533fc584, type: 3}
 --- !u!4 &1813181164
 Transform:
   m_ObjectHideFlags: 0
@@ -801,6 +804,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1375008905714674247, guid: 2762d545267c36245982d7572dffddb9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1375008907566833927, guid: 2762d545267c36245982d7572dffddb9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1556420292668605336, guid: 2762d545267c36245982d7572dffddb9, type: 3}
       propertyPath: m_CellSize.y
       value: 6
@@ -965,6 +976,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5815673987259734807, guid: 2762d545267c36245982d7572dffddb9, type: 3}
+      propertyPath: actionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 283f1fa0f4dd07a46895c5f72a2eac57, type: 3}
+    - target: {fileID: 5815673987501609047, guid: 2762d545267c36245982d7572dffddb9, type: 3}
+      propertyPath: actionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 21a6991ee0c25f34eb13dfd261802490, type: 3}
+    - target: {fileID: 5815673988361864190, guid: 2762d545267c36245982d7572dffddb9, type: 3}
+      propertyPath: actionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b8bba10c5df7e7468d361cabbd7e9cf, type: 3}
     - target: {fileID: 7205429310488396832, guid: 2762d545267c36245982d7572dffddb9, type: 3}
       propertyPath: m_Camera
       value: 

@@ -7,9 +7,12 @@ public class TossCreature : Creature
 {
     [SerializeField]
     protected float throwStrength = 1.0f;
+    [SerializeField]
+    protected AudioClip actionSound;
 
     public override void CreatureAction(GameObject recipient)
     {
+        GameManager.Instance.audioManager.GetComponent<AudioSource>().PlayOneShot(actionSound, 0.5f);
         base.CreatureAction(recipient);
 
         if (recipient == null || recipient.GetComponent<Rigidbody2D>() == null)

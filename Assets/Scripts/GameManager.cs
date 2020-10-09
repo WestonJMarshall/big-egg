@@ -16,8 +16,16 @@ public class GameManager : MonoBehaviour
     private GameObject selectedCreature;
     private GameObject selectedCreatureDetection;
 
+    public AudioClip menuSound;
+    public GameObject audioManager;
+    public GameObject audioManagerPrefab;
+
+
     private void Awake()
     {
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager");
+        if (!audioManager) audioManager = Instantiate(audioManagerPrefab);
+
         //Setup GameManager Singleton Instance
         if (Instance != null && Instance != this)
         {
@@ -60,6 +68,7 @@ public class GameManager : MonoBehaviour
 
     public void CreatureSelected(GameObject creature)
     {
+        audioManager.GetComponent<AudioSource>().PlayOneShot(menuSound, 0.3f);
         selectedCreature = creature;
         selectedCreature.transform.SetParent(null, true);
         if (selectedCreature.GetComponentsInChildren<Collider2D>().Length == 2)
@@ -120,6 +129,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetLevel()
     {
+        audioManager.GetComponent<AudioSource>().PlayOneShot(menuSound, 0.3f);
         GameObject egg = FindObjectOfType<Egg>().gameObject;
         if (egg != null)
         {
