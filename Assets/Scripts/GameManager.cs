@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -31,14 +32,17 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonUp(0) && selectedCreature != null)
+        if (Time.timeScale < 0.5f)
         {
-            CreatureUnSelected();
-        }
-        else if(selectedCreature != null)
-        {
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            selectedCreature.transform.position = new Vector3(worldPos.x, worldPos.y, -30);
+            if (Input.GetMouseButtonUp(0) && selectedCreature != null)
+            {
+                CreatureUnSelectedStart();
+            }
+            else if (selectedCreature != null)
+            {
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                selectedCreature.transform.position = new Vector3(worldPos.x, worldPos.y, -30);
+            }
         }
     }
 
@@ -50,23 +54,41 @@ public class GameManager : MonoBehaviour
     public void StartLevel()
     {
         StartCoroutine(nameof(FindEggStart));
+        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 0.6f, 0.6f, 1);
+
     }
 
     public void CreatureSelected(GameObject creature)
     {
         selectedCreature = creature;
         selectedCreature.transform.SetParent(null, true);
-        selectedCreatureDetection = selectedCreature.GetComponentsInChildren<Collider2D>()[1].gameObject;
+        if (selectedCreature.GetComponentsInChildren<Collider2D>().Length == 2)
+        {
+            selectedCreatureDetection = selectedCreature.GetComponentsInChildren<Collider2D>()[1].gameObject;
+        }
+        else
+        {
+            selectedCreatureDetection = selectedCreature.GetComponentInChildren<Collider2D>().gameObject;
+        }
         selectedCreatureDetection.SetActive(false);
         selectedCreature.GetComponent<Collider2D>().isTrigger = true;
         selectedCreature.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         selectedCreature.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
-    private void CreatureUnSelected()
+    private void CreatureUnSelectedStart()
     {
+        Time.timeScale = 1f;
+
+        StartCoroutine(nameof(RepauseGame));
+    }
+
+    private void CreatureUnSelectedNoReset()
+    {
+        Time.timeScale = 0.0f;
+
         //Find where the creature has been placed
-        if(CheckValidPlacement())
+        if (CheckValidPlacement())
         {
             selectedCreature.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
@@ -114,6 +136,12 @@ public class GameManager : MonoBehaviour
             creature.StopAllCoroutines();
             creature.ResetCanDoAction();
         }
+
+        GameObject.FindGameObjectWithTag("PauseText").GetComponent<TMP_Text>().text = "Paused";
+        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1,0.6f, 0.6f,1);
+        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().SetAllDirty();
+        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().Rebuild(CanvasUpdate.PreRender);
+        Time.timeScale = 0.0f;
     }
 
     public void FinishLevel()
@@ -130,17 +158,13 @@ public class GameManager : MonoBehaviour
             eggSpawnLocation = egg.transform.position;
             eggSpawnRotation = egg.transform.rotation;
         }
+        Time.timeScale = 0;
     }
 
-    public void PauseLevel()
+    public IEnumerator RepauseGame()
     {
-        if(Time.timeScale == 0)
-        {
-            Time.timeScale = 1;
-        }
-        else
-        {
-            Time.timeScale = 0;
-        }
+        yield return new WaitForFixedUpdate();
+        Time.timeScale = 0;
+        CreatureUnSelectedNoReset();
     }
 }

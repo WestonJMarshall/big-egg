@@ -7,6 +7,7 @@ TagManager:
   - CreatureSelectUI
   - Egg
   - Creature
+  - PauseText
   layers:
   - Default
   - TransparentFX

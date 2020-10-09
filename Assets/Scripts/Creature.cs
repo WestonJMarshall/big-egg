@@ -47,7 +47,10 @@ public class Creature : MonoBehaviour
 
     private void OnMouseDown()
     {
-        GameManager.Instance.CreatureSelected(gameObject);
+        if (Time.timeScale < 0.5f)
+        {
+            GameManager.Instance.CreatureSelected(gameObject);
+        }
     }
 
     public virtual void CreatureAction(GameObject recipient) 
@@ -58,7 +61,18 @@ public class Creature : MonoBehaviour
     public IEnumerator DelayAction(Collider2D collision)
     {
         yield return new WaitForSeconds(actionDelay);
-        CreatureAction(collision.gameObject);
+
+        if (GetComponentsInChildren<Collider2D>().Length == 2)
+        {
+            if (egg.GetComponent<Collider2D>().IsTouching(GetComponentsInChildren<Collider2D>()[1]))
+            {
+                CreatureAction(collision.gameObject);
+            }
+        }
+        else
+        {
+            CreatureAction(collision.gameObject);
+        }
     }
 
     public IEnumerator ResetAction()
