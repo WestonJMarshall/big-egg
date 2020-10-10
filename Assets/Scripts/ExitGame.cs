@@ -18,6 +18,14 @@ public class ExitGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (exitUIActive)
+            {
+                Time.timeScale = 0.0f;
+            }
+            else
+            {
+                Time.timeScale = 1.0f;
+            }
             exitUI.SetActive(exitUIActive);
             exitUIActive = !exitUIActive;
         }
