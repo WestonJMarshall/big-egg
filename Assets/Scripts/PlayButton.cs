@@ -17,7 +17,7 @@ public class PlayButton : MonoBehaviour
         GameManager.Instance.audioManager.GetComponent<AudioSource>().PlayOneShot(menuSound, 0.5f);
         Time.timeScale = 1;
         GameObject.FindGameObjectWithTag("PauseText").GetComponent<TMP_Text>().text = "";
-        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 0.6f, 0.6f, 1);
 
     }
 }
