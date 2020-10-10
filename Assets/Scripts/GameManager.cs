@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
     public void StartLevel()
     {
         StartCoroutine(nameof(FindEggStart));
-        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 0.6f, 0.6f, 1);
+        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 1, 1, 1);
 
     }
 
@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
         }
 
         GameObject.FindGameObjectWithTag("PauseText").GetComponent<TMP_Text>().text = "Paused";
-        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1,0.6f, 0.6f,1);
+        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1,1, 1,1);
         GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().SetAllDirty();
         GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().Rebuild(CanvasUpdate.PreRender);
         Time.timeScale = 0.0f;

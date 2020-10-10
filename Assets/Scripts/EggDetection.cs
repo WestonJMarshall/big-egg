@@ -6,6 +6,7 @@ public class EggDetection : MonoBehaviour
 {
     private void OnTriggerStay2D(Collider2D collision)
     {
-        GetComponentInParent<Creature>().EggCollision(collision);
+        if (GetComponentInParent<Creature>() != null)
+            GetComponentInParent<Creature>().EggCollision(collision);
     }
 }
