@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 228061047}
   - component: {fileID: 228061046}
   m_Layer: 0
-  m_Name: Title
+  m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1153,7 +1153,7 @@ GameObject:
   - component: {fileID: 585931240}
   - component: {fileID: 585931239}
   m_Layer: 0
-  m_Name: Text
+  m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1198,15 +1198,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- Use each creature''s unique ability to guide the egg towards to the
+  m_text: '- Use each creatures'' unique abilites to guide the egg towards to the
     goal
 
     - drag and drop the monsters on to the screen
 
-    - creatures can
-    only be placed when the game is paused
-
-    - watch out for hazards'
+    - watch out for
+    hazards'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
