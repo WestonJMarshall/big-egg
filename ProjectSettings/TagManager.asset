@@ -9,7 +9,6 @@ TagManager:
   - Creature
   - PauseText
   - AudioManager
-  - Terrain
   layers:
   - Default
   - TransparentFX

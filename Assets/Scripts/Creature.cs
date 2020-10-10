@@ -12,20 +12,9 @@ public class Creature : MonoBehaviour
     [SerializeField]
     protected float actionReset = 3.0f;
 
-    [SerializeField]
-    protected string actionAnimation = "creature1TurnRight";
-
     private GameObject egg;
 
-    public Animator animator;
-
-    private void Awake()
-    {
-        animator = GetComponentInChildren<Animator>();
-        animator.speed = 0;
-    }
-
-    protected virtual void Update()
+    private void Update()
     {
         if(egg != null)
         {
@@ -44,7 +33,7 @@ public class Creature : MonoBehaviour
         }
     }
 
-    public virtual void EggCollision(Collider2D collision)
+    public void EggCollision(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Egg>() != null)
         {
