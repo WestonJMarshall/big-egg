@@ -33,7 +33,7 @@ public class ShootObject : MonoBehaviour
         if (collision.gameObject.GetComponent<Egg>() != null)
         {
             Destroy(this.gameObject);
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-55, 1), ForceMode2D.Impulse);
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-35, 1), ForceMode2D.Impulse);
         }
         else if (collision.gameObject.tag == "Terrain")
         {

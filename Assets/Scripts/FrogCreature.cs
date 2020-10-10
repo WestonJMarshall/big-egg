@@ -38,7 +38,7 @@ public class FrogCreature : Creature
         GameManager.Instance.audioManager.GetComponent<AudioSource>().PlayOneShot(actionSound, 0.5f);
 
         GameObject sp = Instantiate(shootPrefab);
-        sp.transform.position = transform.position;
+        sp.transform.position = transform.position + new Vector3(-0.5f, 0, 0);
     }
 
     public IEnumerator ResetAnimation()
