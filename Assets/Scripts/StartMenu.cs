@@ -17,7 +17,7 @@ public class StartMenu : MonoBehaviour
     public void StartGame()
     {
         audioManager.GetComponent<AudioSource>().PlayOneShot(menuSound, 0.5f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameManager.Instance.LoadNextLevel();
     }
 
     public void Help()

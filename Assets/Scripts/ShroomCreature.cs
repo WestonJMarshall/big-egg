@@ -17,7 +17,9 @@ public class ShroomCreature : Creature
             {
                 canDoAction = false;
                 animator.speed = 1;
+                animator.Play(actionAnimation, -1, 0f);
                 animator.Play(actionAnimation);
+                StartCoroutine(nameof(StopAnimation), animator.GetCurrentAnimatorStateInfo(0).length);
                 StartCoroutine(nameof(DelayAction), collision);
             }
         }
@@ -25,14 +27,13 @@ public class ShroomCreature : Creature
 
     public override void CreatureAction(GameObject recipient)
     {
-        animator.Play(actionAnimation, -1, 0f);
-        animator.speed = 0;
         GameManager.Instance.audioManager.GetComponent<AudioSource>().PlayOneShot(actionSound, 0.5f);
         base.CreatureAction(recipient);
 
         if (recipient == null || recipient.GetComponent<Rigidbody2D>() == null)
             return;
 
-        recipient.GetComponent<Rigidbody2D>().AddForce(new Vector2(1.5f * throwStrength, 20 * throwStrength), ForceMode2D.Impulse);
+        recipient.GetComponent<Rigidbody2D>().velocity = Vector2.Reflect(recipient.GetComponent<Rigidbody2D>().velocity,Vector2.up) * throwStrength;
+        recipient.GetComponent<Rigidbody2D>().velocity = new Vector2(recipient.GetComponent<Rigidbody2D>().velocity.x, Mathf.Clamp(recipient.GetComponent<Rigidbody2D>().velocity.y * 2.0f, 8, 25));
     }
 }

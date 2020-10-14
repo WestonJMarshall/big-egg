@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     private GameObject selectedCreature;
     private GameObject selectedCreatureDetection;
 
+    public int levelIndex;
+    public GameObject levelCompleteCanvasPrefab;
+
     public AudioClip menuSound;
     public GameObject audioManager;
     public GameObject audioManagerPrefab;
@@ -23,8 +26,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager");
-        if (!audioManager) audioManager = Instantiate(audioManagerPrefab);
+        levelIndex = 0;
 
         //Setup GameManager Singleton Instance
         if (Instance != null && Instance != this)
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        StartLevel();
+        SceneManager.sceneLoaded += StartScene;
     }
 
     private void Update()
@@ -56,14 +58,19 @@ public class GameManager : MonoBehaviour
 
     private void StartScene(Scene scene, LoadSceneMode mode)
     {
-        StartLevel();
+        if (scene.name != "StartMenu")
+        {
+            StartLevel();
+        }
     }
 
     public void StartLevel()
     {
-        StartCoroutine(nameof(FindEggStart));
-        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            audioManager = GameObject.FindGameObjectWithTag("AudioManager");
+            if (!audioManager) audioManager = Instantiate(audioManagerPrefab);
 
+            StartCoroutine(nameof(FindEggStart));
+            GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 0.6f, 0.6f, 1);
     }
 
     public void CreatureSelected(GameObject creature)
@@ -92,7 +99,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(nameof(RepauseGame));
     }
 
-    private void CreatureUnSelectedNoReset()
+    private void CreatureUnSelectedEnd()
     {
         Time.timeScale = 0.0f;
 
@@ -148,15 +155,13 @@ public class GameManager : MonoBehaviour
         }
 
         GameObject.FindGameObjectWithTag("PauseText").GetComponent<TMP_Text>().text = "Paused";
-        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1,1, 1,1);
-        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().SetAllDirty();
-        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().Rebuild(CanvasUpdate.PreRender);
+        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 0.6f, 0.6f, 1);
         Time.timeScale = 0.0f;
     }
 
     public void FinishLevel()
     {
-        Debug.Log("Level Complete");
+        Instantiate(levelCompleteCanvasPrefab);
     }
 
     public IEnumerator FindEggStart()
@@ -175,6 +180,12 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
         Time.timeScale = 0;
-        CreatureUnSelectedNoReset();
+        CreatureUnSelectedEnd();
+    }
+
+    public void LoadNextLevel()
+    {
+        levelIndex++;
+        SceneManager.LoadScene(levelIndex, LoadSceneMode.Single);
     }
 }

@@ -10,5 +10,13 @@ public class Hazard : MonoBehaviour
         {
             GameManager.Instance.ResetLevel();
         }
+
+        if (collision.gameObject.GetComponent<Creature>() != null)
+        {
+            collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            collision.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+            collision.gameObject.transform.SetParent(GameObject.FindGameObjectWithTag("CreatureSelectUI").transform);
+            collision.gameObject.GetComponent<Collider2D>().isTrigger = false;
+        }
     }
 }

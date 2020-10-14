@@ -93,4 +93,11 @@ public class Creature : MonoBehaviour
     }
 
     public void ResetCanDoAction() { canDoAction = true; }
+
+    public IEnumerator StopAnimation(float time)
+    {
+        yield return new WaitForSeconds(time);
+        animator.Play(actionAnimation, -1, 0f);
+        animator.speed = 0;
+    }
 }
