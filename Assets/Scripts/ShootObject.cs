@@ -8,6 +8,7 @@ public class ShootObject : MonoBehaviour
     void Start()
     {
         Destroy(this.gameObject, 5);
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
     }
 
     void Update()

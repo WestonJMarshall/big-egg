@@ -19,7 +19,6 @@ public class ShroomCreature : Creature
                 animator.speed = 1;
                 animator.Play(actionAnimation, -1, 0f);
                 animator.Play(actionAnimation);
-                StartCoroutine(nameof(StopAnimation), animator.GetCurrentAnimatorStateInfo(0).length);
                 StartCoroutine(nameof(DelayAction), collision);
             }
         }
