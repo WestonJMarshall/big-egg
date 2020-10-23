@@ -23,6 +23,8 @@ public class Creature : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         animator.speed = 0;
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, -42);
     }
 
     protected virtual void Update()

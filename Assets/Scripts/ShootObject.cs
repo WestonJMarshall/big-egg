@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class ShootObject : MonoBehaviour
@@ -8,7 +7,7 @@ public class ShootObject : MonoBehaviour
     void Start()
     {
         Destroy(this.gameObject, 5);
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1.5f);
+        transform.position = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z + 1.5f);
     }
 
     void Update()

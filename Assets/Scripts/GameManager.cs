@@ -66,11 +66,12 @@ public class GameManager : MonoBehaviour
 
     public void StartLevel()
     {
-            audioManager = GameObject.FindGameObjectWithTag("AudioManager");
-            if (!audioManager) audioManager = Instantiate(audioManagerPrefab);
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager");
+        if (!audioManager) audioManager = Instantiate(audioManagerPrefab);
 
-            StartCoroutine(nameof(FindEggStart));
-            GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 0.6f, 0.6f, 1);
+        StartCoroutine(nameof(FindEggStart));
+        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+
     }
 
     public void CreatureSelected(GameObject creature)
@@ -155,7 +156,7 @@ public class GameManager : MonoBehaviour
         }
 
         GameObject.FindGameObjectWithTag("PauseText").GetComponent<TMP_Text>().text = "Paused";
-        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 0.6f, 0.6f, 1);
+        GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 1, 1, 1);
         Time.timeScale = 0.0f;
     }
 
@@ -175,6 +176,14 @@ public class GameManager : MonoBehaviour
             eggSpawnRotation = egg.transform.rotation;
         }
         Time.timeScale = 0;
+
+        if(levelIndex == 1)
+        {
+            audioManager.GetComponent<AudioSource>().PlayOneShot(menuSound, 0.5f);
+            Time.timeScale = 1;
+            GameObject.FindGameObjectWithTag("PauseText").GetComponent<TMP_Text>().text = "";
+            GameObject.FindGameObjectWithTag("CreatureSelectUI").GetComponent<Image>().color = new Color(1, 0.6f, 0.6f, 1);
+        }
     }
 
     public IEnumerator RepauseGame()
