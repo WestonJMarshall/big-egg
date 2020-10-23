@@ -19,7 +19,7 @@ public class Creature : MonoBehaviour
 
     public Animator animator;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         animator = GetComponentInChildren<Animator>();
         animator.speed = 0;

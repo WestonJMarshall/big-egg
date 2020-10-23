@@ -16,6 +16,12 @@ public class FrogCreature : Creature
 
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        GetComponent<SpriteRenderer>().flipX = true;
+    }
+
     protected override void Update()
     {
         if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)

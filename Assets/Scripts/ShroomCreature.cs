@@ -33,6 +33,6 @@ public class ShroomCreature : Creature
             return;
 
         recipient.GetComponent<Rigidbody2D>().velocity = Vector2.Reflect(recipient.GetComponent<Rigidbody2D>().velocity,Vector2.up) * throwStrength;
-        recipient.GetComponent<Rigidbody2D>().velocity = new Vector2(recipient.GetComponent<Rigidbody2D>().velocity.x, Mathf.Clamp(recipient.GetComponent<Rigidbody2D>().velocity.y * 2.0f, 8, 25));
+        recipient.GetComponent<Rigidbody2D>().velocity = new Vector2(recipient.GetComponent<Rigidbody2D>().velocity.x * 1.1f, Mathf.Clamp(recipient.GetComponent<Rigidbody2D>().velocity.y * 2.0f, 6, 14));
     }
 }

@@ -161,7 +161,8 @@ public class GameManager : MonoBehaviour
 
     public void FinishLevel()
     {
-        Instantiate(levelCompleteCanvasPrefab);
+        GameObject lcc = Instantiate(levelCompleteCanvasPrefab);
+        lcc.GetComponentInChildren<TMP_Text>().text = "Level " + levelIndex + " Complete!";
     }
 
     public IEnumerator FindEggStart()
